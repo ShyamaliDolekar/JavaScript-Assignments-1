@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
     <head>
         <title>Todo List</title>
     </head>
@@ -10,4 +10,93 @@
         </div>
     </body>
     <script src='./script.js'></script>
-</html>
+</html> -->
+<html>
+
+<head>
+    <style>
+        html {
+            background-color: rgb(228, 187, 193);
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        button {
+            border: none;
+            background-color:bisque;
+            margin: 20px;
+            color: lightcoral;
+            padding: 15px;
+            border-radius: 25px;
+            font-size: medium;
+            width: 180px;
+        }
+        .complete,.pendingCont{
+            border: 1px solid black;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="complete">
+            <button id="completed">completed</button>
+            <div class="forComp">
+                <h3>Completed List :</h3>
+            </div>
+        </div>
+
+        <div class="pendingCont">
+            <button id="pending">Pending</button>
+            <div class="forPend">
+                <h3>Pending List :</h3>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        let comp = document.querySelector("#completed");
+        let Pend = document.querySelector("#pending");
+        let forCompDiv = document.querySelector(".forComp");
+        let forPendDiv = document.querySelector(".forPend");
+        fetch('https://jsonplaceholder.typicode.com/todos').then(function (data) {
+            console.log(data)
+            return data.json()
+        }).then(function (data) {
+            Pend.addEventListener('click', function () {
+                for (var i = 0; i < data.length; i++) {
+                    var elem = data[i];
+                    if (elem.completed === false) {
+                        let para = document.createElement('p')
+                        let text = elem.title;
+                        let Id=i;
+                        para.innerHTML="Id no:  "+"["+Id+"]"+"&nbsp"+text;
+                        para.style.textAlign = 'justify';
+                        para.style.lineHeight='20px';
+                        forPendDiv.appendChild(para);
+                    }
+                }
+            })
+            comp.addEventListener("click", function () {
+                for (var i = 0; i < data.length; i++) {
+                    var elem = data[i];
+                    if (elem.completed === true) {
+                        let para = document.createElement('p')
+                        let text = elem.title;
+                        let Id=i;
+                        para.innerHTML="Id no:  "+"["+Id+"]"+"&nbsp"+text;
+                        para.style.textAlign = 'justify';
+                        para.style.lineHeight='20px';
+                        forCompDiv.appendChild(para);
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+
+</html> 
